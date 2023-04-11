@@ -3,25 +3,31 @@
 	<PropertyGroup>
 		<FileVersion>7.23.0411.1</FileVersion>
 		<AssemblyVersion>7.0.0.1</AssemblyVersion>
-		<OutputType>Exe</OutputType>
 		<TargetFramework>net7.0</TargetFramework>
-		<RootNamespace>Ornek_SqLiteCon</RootNamespace>
+		<RootNamespace>Ornek_SQLiteModel</RootNamespace>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Ornek-SQLiteModel\Ornek-SQLiteModel.csproj" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Migrations\" />
+	</ItemGroup>
 
 </Project>
