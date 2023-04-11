@@ -78,18 +78,18 @@ namespace Ornek_SQLiteModel.Migrations
                 columns: new[] { "Id", "Aciklama", "BitOp", "Diud", "EnAdi", "OrAdi", "OrAdiA", "TrAdi" },
                 values: new object[,]
                 {
-                    { 1, "", 1, new Guid("e7959028-d362-4a2a-b446-9bbd64e881eb"), "English", "", "", "ingilizce" },
-                    { 2, "nihongo, bunun bir orjinal yazilisi var, bir de latin", 1, new Guid("ff8e3459-1131-4371-b750-7fa4f93d8145"), "Japanese", "", "nihongo", "Japonca" },
-                    { 3, "", 1, new Guid("34d4d9f0-323f-4d3b-8e58-758ea412a199"), "Arabic", "", "arabiyye", "Arapca" },
-                    { 4, "", 1, new Guid("ba1d84f5-36e5-4002-a5a7-f9d78910ef5b"), "Farsee", "", "Farisi", "Farsca" },
-                    { 5, "", 1, new Guid("c8b91209-f985-4aaf-96a3-ac015b74dc4b"), "Osmani", "", "", "Osmanlica" },
-                    { 6, "", 1, new Guid("74232524-0fd0-4b5d-a1ad-4404d5e0a18b"), "Hongogu", "", "", "Korece" }
+                    { 1, "", 1, new Guid("54e37c59-e509-41a8-9c96-3dff948f43a0"), "English", "", "", "ingilizce" },
+                    { 2, "nihongo, bunun bir orjinal yazilisi var, bir de latin", 1, new Guid("be895ac0-bb1e-4af2-b6c9-08382b24a3fc"), "Japanese", "", "nihongo", "Japonca" },
+                    { 3, "", 1, new Guid("dc1f81f0-5e8a-448d-ac2b-d12f3c20ad67"), "Arabic", "", "arabiyye", "Arapca" },
+                    { 4, "", 1, new Guid("0eb970da-669c-4a37-8d57-45450f5054c7"), "Farsee", "", "Farisi", "Farsca" },
+                    { 5, "", 1, new Guid("40d65417-9433-460d-af52-4fc0424e7db9"), "Osmani", "", "", "Osmanlica" },
+                    { 6, "", 1, new Guid("d8042675-dcd0-4023-a1b3-03b84d78a129"), "Hongogu", "", "", "Korece" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Sozcuk",
                 columns: new[] { "Id", "Aciklama", "Anlam", "BitOp", "EkNot", "EsAnlam", "Kayit", "Szid" },
-                values: new object[] { 1, "bir emirle baslayak", "Okumak", 1, "", "", new DateTime(2023, 4, 11, 15, 20, 39, 995, DateTimeKind.Local).AddTicks(3428), new Guid("d77bfd1f-ad1a-4eaa-8ecc-b258fba42014") });
+                values: new object[] { 1, "bir emirle baslayak", "Okumak", 1, "", "", new DateTime(2023, 4, 11, 18, 18, 2, 930, DateTimeKind.Local).AddTicks(1880), new Guid("afb58bcd-a5e7-402a-b17e-e557766b431d") });
         }
 
         /// <inheritdoc />

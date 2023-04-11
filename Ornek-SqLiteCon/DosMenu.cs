@@ -1,4 +1,6 @@
-﻿using Ornek_SQLiteModel;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
+using Ornek_SQLiteModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,11 @@ namespace Ornek_SqLiteCon
                 Console.WriteLine("Test Menu - {0} - Path:{1}", DateTime.Now, new VTPath().YerelYol());
                 Console.WriteLine("1-Diller");
                 Console.WriteLine("2-Sozcukler (son 10)");
-                Console.WriteLine("3-Sozcuk Ekle");
-                Console.WriteLine("4-Karsilik son");
-                Console.WriteLine("5-Karsilik Ekle");
+                Console.WriteLine("3-Karsilik son");
+                Console.WriteLine("");
+                Console.WriteLine("4-Sozcuk Ekle    5-Karsilik Ekle");
+                Console.WriteLine("");
+                Console.WriteLine("9-Sozcuk Sil");
                 Console.WriteLine("");
 
                 ConsoleKeyInfo ck = Console.ReadKey(true);
@@ -30,24 +34,80 @@ namespace Ornek_SqLiteCon
                     break;
                 else if (ck.Key == ConsoleKey.D0 || ck.Key == ConsoleKey.NumPad0)
                     break;
+
                 else if (ck.Key == ConsoleKey.D1 || ck.Key == ConsoleKey.NumPad1)
                     DilList();
                 else if (ck.Key == ConsoleKey.D2 || ck.Key == ConsoleKey.NumPad2)
                     Sozcukler();
                 else if (ck.Key == ConsoleKey.D3 || ck.Key == ConsoleKey.NumPad3)
-                    SozcukEkle();
-                else if (ck.Key == ConsoleKey.D4 || ck.Key == ConsoleKey.NumPad4)
                     Karsiliklar();
+
+                else if (ck.Key == ConsoleKey.D4 || ck.Key == ConsoleKey.NumPad4)
+                    SozcukEkle();
                 else if (ck.Key == ConsoleKey.D5 || ck.Key == ConsoleKey.NumPad5)
                     KarsilikEkle();
 
+                else if (ck.Key == ConsoleKey.D9 || ck.Key == ConsoleKey.NumPad9)
+                    SozcukSil();
+
             } while (true);
+        }
+
+        private void SozcukSil()
+        {
+
+            Console.WriteLine("Sozcuk, baska dillerdeki karsiliklariyla beraber silinecek");
+            Console.Write("Silinecek Sozcuk Yaziniz:");
+            string sozcuk = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(sozcuk) == false)
+            {
+                int ret = 0;
+                using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+                {
+                    List<Sozcuk> sozcuks = new List<Sozcuk>();
+                    // sozcuks = db.Sozcuk.Where(x => x.Anlam == sozcuk).ToList();
+                    sozcuks = db.Sozcuk.Where(x => x.Anlam.ToUpper() == sozcuk.ToUpper()).ToList();
+                    // DbContext.Entity.Where(i => i.TextField.Contains("Store", StringComparison.InvariantCultureIgnoreCase))
+                    // sozcuks = db.Sozcuk.Where(x => x.Anlam.Contains(sozcuk, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                    // bulundu mu?
+                    if (sozcuks != null && sozcuks.Count > 0)
+                    {
+                        Console.Write("{0} adet sozcuk bulundu, silmek istiyor musunuz? e/h:", sozcuks.Count);
+
+                        if (Console.ReadKey().Key == ConsoleKey.E)
+                        {
+                            // db.Database.ExecuteSql()
+                            List<Karsilik> karsiliks = db.Karsilik.Where(x => x.Szid == sozcuks[0].Szid).ToList();
+
+                            db.Karsilik.RemoveRange(karsiliks);
+                            db.Sozcuk.RemoveRange(sozcuks);
+
+                            ret = db.SaveChanges();
+
+                        }
+                        else Console.WriteLine("sozcuk bulunamadi");
+                    }
+                }
+
+                if (ret > 0) Console.WriteLine("kayitlar silindi. {0}", ret);
+                else Console.WriteLine("silinemedi");
+
+
+            }
+            else
+            {
+                Console.WriteLine("Sozcuk girmediniz, cikilacak");
+            }
+
+            Console.ReadKey();
         }
 
         public void KarsilikEkle()
         {
             Karsilik krs = new Karsilik();
-            Sozcuk sz = new Sozcuk();
+            Sozcuk soz = new Sozcuk();
 
         tekrar:
             Console.WriteLine("Farkli Dilde karsiligi yazilacak olan sozcugu yaziniz");
@@ -73,24 +133,24 @@ namespace Ornek_SqLiteCon
                 }
                 else
                 {
-                    sz = bul[0];
+                    soz = bul[0];
                 }
             }
 
-            List<KDil> dils = new List<KDil>(); 
+            List<KDil> dils = new List<KDil>();
             using (OrnekSQLiteContext db = new OrnekSQLiteContext())
             {
                 dils = db.KDil.Where(x => x.BitOp == 1).ToList();
             }
-            string diller = string.Empty;
+            string diller = "0-cikis";
             foreach (KDil dil in dils)
             {
-                diller = dil.Id.ToString() + dil.TrAdi + " / ";
+                diller += " / " + dil.Id.ToString() + "-" + dil.TrAdi;
             }
 
-            dilsec:
+        dilsec:
             Console.WriteLine(diller);
-            Console.WriteLine("{0} bu kelimeyi hangi dil de anlamini yazacaksiniz:", sz.Anlam);
+            Console.WriteLine("{0} bu kelimeyi hangi dil de anlamini yazacaksiniz:", soz.Anlam);
             string selDil = Console.ReadLine();
             KDil? found = null;
 
@@ -98,17 +158,48 @@ namespace Ornek_SqLiteCon
             {
                 int did = Convert.ToInt32(selDil);
 
+                if (did == 0)
+                    return;
+
                 dils.Where(c => c.Id == did).ToList();
                 found = dils.Find(x => x.Id == did);
             }
-            if(found == null)
+            if (found == null)
             {
                 Console.WriteLine("dili yanlis sectiniz, numarasini yaziniz");
                 goto dilsec;
             }
 
-            Console.ReadKey();
+            krs.Diud = found.Diud;
+            krs.BitOp = 1;
+            krs.Szid = soz.Szid;
+
+            Console.Write("Anlam1:");
             krs.Anlam1 = Console.ReadLine();
+            Console.Write("Anlam2:");
+            krs.Anlam2 = Console.ReadLine();
+            Console.Write("En Okunus:");
+            krs.OkunusEn = Console.ReadLine();
+            Console.Write("Aciklama:");
+            krs.Aciklama = Console.ReadLine();
+
+            int ret = 0;
+            using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+            {
+                db.Karsilik.Add(krs);
+                ret = db.SaveChanges();
+            }
+
+            if (ret == 0)
+            {
+                Console.WriteLine("kaydedilemedi");
+            }
+            else
+            {
+                Console.WriteLine("kaydedildi");
+            }
+            Console.ReadKey();
+
         }
 
         public void Karsiliklar()
@@ -119,6 +210,9 @@ namespace Ornek_SqLiteCon
             {
                 list = db.Karsilik.Where(x => x.BitOp == 1).OrderByDescending(o => o.Id).ToList();
             }
+
+            if (list.Count == 0) Console.WriteLine("hic karsilik yok");
+
             foreach (Karsilik item in list)
             {
                 Console.WriteLine("{0} - {1}", item.Id, item.Anlam1);
@@ -141,40 +235,45 @@ namespace Ornek_SqLiteCon
             Console.Write("Ek Not (Mondly; m230411):");
             sz.EkNot = Console.ReadLine();
 
-            int ret;
-            try
+            if (string.IsNullOrEmpty(sz.Anlam) == true)
             {
-                using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+                Console.WriteLine("bos gecildi, cikiliyor..");
+            }
+            else
+            {
+                int ret;
+                try
                 {
-                    // ayni kelime birden fazla olmamali
-                    List<Sozcuk> kontrol = db.Sozcuk.Where(x => x.Anlam == sz.Anlam).ToList();
-                    if (kontrol == null || kontrol.Count == 0)
+                    using (OrnekSQLiteContext db = new OrnekSQLiteContext())
                     {
-                        // yok ekle
-
-                        db.Sozcuk.Add(sz);
-
-                        ret = db.SaveChanges();
-
-                        if (ret != 0)
+                        // ayni kelime birden fazla olmamali
+                        List<Sozcuk> kontrol = db.Sozcuk.Where(x => x.Anlam == sz.Anlam).ToList();
+                        if (kontrol == null || kontrol.Count == 0)
                         {
-                            Console.WriteLine("Kaydedildi");
+                            // yok ekle
+
+                            db.Sozcuk.Add(sz);
+
+                            ret = db.SaveChanges();
+
+                            if (ret != 0)
+                            {
+                                Console.WriteLine("Kaydedildi");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Bu sozcuk zaten var");
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("Bu sozcuk zaten var");
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
             Console.ReadKey();
         }
-
 
         public void Sozcukler()
         {
@@ -184,11 +283,65 @@ namespace Ornek_SqLiteCon
             {
                 list = db.Sozcuk.Where(x => x.BitOp == 1).OrderByDescending(o => o.Id).ToList();
             }
-
+            if (list.Count == 0) Console.WriteLine("hic sozcuk yok");
             foreach (Sozcuk item in list)
             {
                 Console.WriteLine("{0} - {1}", item.Id, item.Anlam);
             }
+
+            Console.Write("anlamlarini gormek icin numarsini yazin (0 cikis):");
+            string sno = Console.ReadLine();
+            if (string.IsNullOrEmpty(sno) == false)
+            {
+                int sid = Convert.ToInt32(sno);
+                if (sid > 0)
+                {
+                    Sozcuk? fsoz = list.Find(x => x.Id == sid);
+                    if (fsoz != null)
+                    {
+                        Karsiliklar(fsoz);
+                    }
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        public void Karsiliklar(Sozcuk sozcuk)
+        {
+            List<Karsilik> list = new List<Karsilik>();
+
+            using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+            {
+                list = db.Karsilik.Where(x => x.BitOp == 1 && x.Szid == sozcuk.Szid).OrderByDescending(o => o.Id).ToList();
+            }
+
+            if (list.Count == 0) Console.WriteLine("hic karsilik yok");
+
+            foreach (Karsilik item in list)
+            {
+                Console.WriteLine("{0} - {1}", item.Id, item.Anlam1);
+            }
+
+            // Console.ReadKey();
+        }
+
+
+        public void Sozcukler1()
+        {
+            List<Sozcuk> list = new List<Sozcuk>();
+
+            using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+            {
+                list = db.Sozcuk.Where(x => x.BitOp == 1).OrderByDescending(o => o.Id).ToList();
+            }
+            if (list.Count == 0) Console.WriteLine("hic sozcuk yok");
+            foreach (Sozcuk item in list)
+            {
+                Console.WriteLine("{0} - {1}", item.Id, item.Anlam);
+            }
+
+            // ConsoleKeyInfo kin = Console.ReadKey();
 
             Console.ReadKey();
         }

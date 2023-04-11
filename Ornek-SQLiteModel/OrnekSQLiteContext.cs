@@ -14,7 +14,8 @@ namespace Ornek_SQLiteModel
 
         public OrnekSQLiteContext()
         {
-            vtYol = new VTPath().YerelYol();
+            // vtYol = new VTPath().YerelYol();
+            vtYol = new VTPath().BulutYol();
         }
 
         public OrnekSQLiteContext(string pYol)
