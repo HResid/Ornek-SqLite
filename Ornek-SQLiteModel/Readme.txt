@@ -18,3 +18,7 @@ Visual Studio
 Install-Package Microsoft.EntityFrameworkCore.Tools
 Add-Migration InitialCreate
 Update-Database
+
+
+12.04.2023 17:32
+----------------
