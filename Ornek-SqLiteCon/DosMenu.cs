@@ -1,16 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
-using Ornek_SQLiteModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ornek_SQLiteModel;
 
 namespace Ornek_SqLiteCon
 {
+    /// <summary>
+    /// Test/Console Menu
+    /// </summary>
+    /// <remarks>
+    /// Created: 10/04/2023 
+    /// Review : 11/04/2023
+    /// Review : 12/04/2023 0955, HRe.. checking...
+    /// </remarks>
     public class DosMenu
     {
 
@@ -289,7 +288,7 @@ namespace Ornek_SqLiteCon
                 Console.WriteLine("{0} - {1}", item.Id, item.Anlam);
             }
 
-            Console.Write("anlamlarini gormek icin numarsini yazin (0 cikis):");
+            Console.Write("Anlamlarini gormek icin numarasini yazin (0 cikis):");
             string sno = Console.ReadLine();
             if (string.IsNullOrEmpty(sno) == false)
             {

@@ -5,6 +5,10 @@ namespace Ornek_SQLiteModel
 {
     // https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli
 
+    /// <summary>
+    /// Created: 11.04.2023 1323, HRe.. hem sqlite testi, hem de console, hem de pratik
+    /// Review : 12/04/2023 0956, HRe.. sadece buluta kayit yapcak sekilde degistirildi. test ederken hep bastan baslamak zor geldi.
+    /// </summary>
     public class OrnekSQLiteContext : DbContext
     {
         // DbContext adi: OrnekSQLiteContext

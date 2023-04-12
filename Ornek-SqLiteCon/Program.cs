@@ -9,7 +9,8 @@ using Ornek_SQLiteModel;
 
 Console.WriteLine("SQLite Örneklerini içeren projedir. Başlangıç, 10.04.2023");
 
-new DosMenu().Menu();
+// new DosMenu().Menu();
+ new SozcukMenu().ShowMenu();
 
 // string byol = new Ornek_SQLiteModel.VTPath().BulutYol();
 // Console.WriteLine(byol);
