@@ -82,6 +82,7 @@ namespace Ornek_SqLiteWpf
             txtOzelKod.Text = m_Karsilik.OzelKod;
             txtBitOp.Text = m_Karsilik.BitOp.ToString();
 
+            txtAnlam1.Focus();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

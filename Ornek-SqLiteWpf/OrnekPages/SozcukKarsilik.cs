@@ -4,12 +4,16 @@ namespace Ornek_SqLiteWpf
 {
     internal class SozcukKarsilik
     {
-        public string Sozcuk { get; }
-        public string Anlam1 { get; }
-        public string Anlam2 { get; }
-        public int SozcukId { get; }
-        public int KarsilikId { get; }
+        public string Sozcuk { get; set; }
+        public string? Anlam1 { get; set; }
+        public string? Anlam2 { get; set; }
+        public int SozcukId { get; set; }
+        public int KarsilikId { get; set; }
 
+        public SozcukKarsilik()
+        {
+            
+        }
         public SozcukKarsilik(string sozcuk, string anlam1, string anlam2, int sozcukId, int karsilikId)
         {
             Sozcuk = sozcuk;

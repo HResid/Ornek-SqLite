@@ -14,6 +14,16 @@ namespace Ornek_SQLiteModel
     /// </remarks>
     public class Karsilik
     {
+        public Karsilik()
+        {
+                
+        }
+
+        public Karsilik(int varsayilanBaslat)
+        {
+            Anlam1 = "";
+            Anlam2 = "";
+        }
         /// <summary>
         /// sira takip eden sayi
         /// </summary>
@@ -26,7 +36,7 @@ namespace Ornek_SQLiteModel
         /// <summary>
         ///  sorgularda vs. pratik oluyor.
         /// </summary>
-        public int SozcukId { get; set; }
+        public int SozcukId { get; set; } = 0;
         /// <summary>
         /// Dil Guid
         /// </summary>
@@ -34,7 +44,7 @@ namespace Ornek_SQLiteModel
         /// <summary>
         /// sorgularda vs. pratik oluyor.
         /// </summary>
-        public int DilId { get; set; }
+        public int DilId { get; set; } = 0;
 
         public string Anlam1 { get; set; }
         public string Anlam2 { get; set; }

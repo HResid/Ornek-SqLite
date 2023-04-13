@@ -45,6 +45,13 @@ Title="Sozcuk" d:DesignHeight="500" d:DesignWidth="800" Loaded="Page_Loaded">
                     <TextBlock Padding="10,3,10,3" VerticalAlignment="Center" Text="Aç"/>
                 </StackPanel>
             </Button>
+            <Separator/>
+            <Button Name="btnKarsilikEkle" Click="btnKarsilikEkle_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/CoreRes;component/Images/Open32.png" Width="32" />
+                    <TextBlock Padding="10,3,10,3" VerticalAlignment="Center" Text="Karsilik"/>
+                </StackPanel>
+            </Button>
             <Button HorizontalAlignment="Left" Name="btnRefresh" Click="btnRefresh_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/CoreRes;component/Images/Refresh32.png" Width="32" />

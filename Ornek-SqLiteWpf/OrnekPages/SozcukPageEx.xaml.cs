@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System;
 using Ornek_SQLiteModel;
+using System.Reflection.Metadata;
 
 namespace Ornek_SqLiteWpf
 {
@@ -42,7 +43,7 @@ namespace Ornek_SqLiteWpf
             cboDiller.DataContext = diller;
             cboDiller.DisplayMemberPath = "TrAdi";
             cboDiller.SelectedValuePath = "Id";
-            
+
             // hard code
             cboDiller.SelectedValue = 1;
 
@@ -62,6 +63,10 @@ namespace Ornek_SqLiteWpf
 
                 using (OrnekSQLiteContext db = new OrnekSQLiteContext())
                 {
+                    // amac: sozcuk tablosundaki tum kayitlar, ve id baglantisi varsa Karsilik tablosundakiler
+
+                    /*
+                    // bu calisiyor ama sonuc yetersiz
                     m_sozcukKarsilik = (from soz in db.Sozcuk
                                         join kar in db.Karsilik on soz.Uid equals kar.SozcukUid
                                         where kar.DilId == dilId
@@ -71,13 +76,74 @@ namespace Ornek_SqLiteWpf
                                             kar.Anlam2,
                                             soz.Id,
                                             kar.Id
-                                        )).ToList();
+                                            )).ToList();
+                    */
+                    /*
+                    // calismadi
+                    m_sozcukKarsilik = (from soz in db.Sozcuk
+                                        join kar in db.Karsilik on soz.Uid equals kar.SozcukUid into sozGrup
+                                        from sz in sozGrup.DefaultIfEmpty(new Karsilik(0))
+                                        where sz.DilId == dilId
+                                        select new SozcukKarsilik(
+                                            soz.Anlam, sz.Anlam1, sz.Anlam2,
+                                            soz.Id, sz.Id )).ToList();
+
+                        m_sozcukKarsilik = (from soz in sozList
+                                            join kar in karList on soz.Uid equals kar.SozcukUid into sozGrup
+                                            from sz in sozGrup.DefaultIfEmpty()
+                                            where sz.DilId == dilId
+                                            select new SozcukKarsilik(soz.Anlam, sz.Anlam1, sz.Anlam2,
+                                                soz.Id, sz.Id)).ToList();
+
+                    */
+                    List<Sozcuk> sozList = db.Sozcuk.Where(x => x.BitOp == 1).ToList();
+                    List<Karsilik> karList = db.Karsilik.Where(x => x.BitOp == 1).ToList();
+
+                    try
+                    {
+                        m_sozcukKarsilik = (from soz in sozList
+                                            select new SozcukKarsilik(soz.Anlam, "", "", soz.Id, 0)).ToList();
+
+                        List<SozcukKarsilik> sozKarsilikList = new List<SozcukKarsilik>();
+
+                        // SozcukKarsilik skn = new SozcukKarsilik();
+
+                        foreach(SozcukKarsilik sk in m_sozcukKarsilik)
+                        {
+                            // skn.Sozcuk = sk.Sozcuk;
+                            // skn.SozcukId = sk.SozcukId;
+
+                            Karsilik? bkar = karList.Find(x => x.SozcukId == sk.SozcukId);
+                            if(bkar != null)
+                            {
+                                sk.Anlam1 = bkar.Anlam1;
+                                sk.Anlam2 = bkar.Anlam2;
+                            }
+
+                            //sozKarsilikList.Add(skn);
+                            //skn = new SozcukKarsilik();
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        sbiReady.Content = ex.Message;
+                    }
+                    finally
+                    {
+                        m_sozcukKarsilik = (from soz in sozList
+                                            join kar in karList on soz.Uid equals kar.SozcukUid
+                                            where kar.DilId == dilId
+                                            select new SozcukKarsilik(
+                                                soz.Anlam, kar.Anlam1, kar.Anlam2, soz.Id, kar.Id)).ToList();
+                    }
+
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Err-Sozcuk-50");
+                MessageBox.Show(ex.Message, "Err-Sozcuk-117");
             }
 
             DataGrid1.ItemsSource = m_sozcukKarsilik;
@@ -116,7 +182,7 @@ namespace Ornek_SqLiteWpf
             else if (e.Key == System.Windows.Input.Key.Insert)
             {
                 e.Handled = true;
-                btnNew_Click(sender, null);
+                btnKarsilikEkle_Click(sender, null);
             }
         }
 
@@ -196,5 +262,20 @@ namespace Ornek_SqLiteWpf
                 }
             }
         }
+
+        private void btnKarsilikEkle_Click(object sender, RoutedEventArgs e)
+        {
+            Sozcuk ds = (Sozcuk)DataGrid1.SelectedItem;
+
+            if (ds != null)
+            {
+
+                KarsilikWinEx win = new KarsilikWinEx();
+                win.m_Sozcuk = ds;
+                win.Owner = Application.Current.MainWindow;
+                win.ShowDialog();
+            }
+        }
+
     }  // End Class
 } // Namespace
