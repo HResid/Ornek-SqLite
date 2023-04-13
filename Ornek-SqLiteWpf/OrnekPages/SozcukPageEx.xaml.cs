@@ -21,6 +21,8 @@ namespace Ornek_SqLiteWpf
         // List<Sozcuk> m_Sozcukler = new List<Sozcuk>();
         List<SozcukKarsilik> m_sozcukKarsilik = new List<SozcukKarsilik>();
 
+        public int m_seciliDilId { get; private set; }
+
         public SozcukPageEx()
         {
             InitializeComponent();
@@ -97,7 +99,7 @@ namespace Ornek_SqLiteWpf
 
                     */
                     List<Sozcuk> sozList = db.Sozcuk.Where(x => x.BitOp == 1).ToList();
-                    List<Karsilik> karList = db.Karsilik.Where(x => x.BitOp == 1).ToList();
+                    List<Karsilik> karList = db.Karsilik.Where(x => x.BitOp == 1 && x.DilId == dilId).ToList();
 
                     try
                     {
@@ -108,13 +110,13 @@ namespace Ornek_SqLiteWpf
 
                         // SozcukKarsilik skn = new SozcukKarsilik();
 
-                        foreach(SozcukKarsilik sk in m_sozcukKarsilik)
+                        foreach (SozcukKarsilik sk in m_sozcukKarsilik)
                         {
                             // skn.Sozcuk = sk.Sozcuk;
                             // skn.SozcukId = sk.SozcukId;
 
                             Karsilik? bkar = karList.Find(x => x.SozcukId == sk.SozcukId);
-                            if(bkar != null)
+                            if (bkar != null)
                             {
                                 sk.Anlam1 = bkar.Anlam1;
                                 sk.Anlam2 = bkar.Anlam2;
@@ -131,11 +133,11 @@ namespace Ornek_SqLiteWpf
                     }
                     finally
                     {
-                        m_sozcukKarsilik = (from soz in sozList
-                                            join kar in karList on soz.Uid equals kar.SozcukUid
-                                            where kar.DilId == dilId
-                                            select new SozcukKarsilik(
-                                                soz.Anlam, kar.Anlam1, kar.Anlam2, soz.Id, kar.Id)).ToList();
+                        ////m_sozcukKarsilik = (from soz in sozList
+                        //                    join kar in karList on soz.Uid equals kar.SozcukUid
+                        //                    where kar.DilId == dilId
+                        //                    select new SozcukKarsilik(
+                        //                        soz.Anlam, kar.Anlam1, kar.Anlam2, soz.Id, kar.Id)).ToList();
                     }
 
                 }
@@ -168,7 +170,7 @@ namespace Ornek_SqLiteWpf
             {
                 // update/save on win
                 // db.SaveChanges();
-                LoadData(1);
+                LoadData(m_seciliDilId);
             }
         }
 
@@ -196,11 +198,11 @@ namespace Ornek_SqLiteWpf
                 // db.Sozcuk.Add(win.m_Sozcuk);
                 // sbiReady.Content = db.SaveChanges().ToString() + " record(s) saved";
 
-                LoadData(1);
+                LoadData(m_seciliDilId);
             }
         }
 
-        private void ctxSil_Click(object sender, RoutedEventArgs e)
+        private void ctxDelete_Click(object sender, RoutedEventArgs e)
         {
             Sozcuk ds = (Sozcuk)DataGrid1.SelectedItem;
 
@@ -229,7 +231,7 @@ namespace Ornek_SqLiteWpf
                     }
 
                     if (ret > 0)
-                        LoadData(1);
+                        LoadData(m_seciliDilId);
 
                 }
             }
@@ -241,12 +243,7 @@ namespace Ornek_SqLiteWpf
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            LoadData(1);
-        }
-
-        private void ctxDelete_Click(object sender, RoutedEventArgs e)
-        {
-
+            LoadData(m_seciliDilId);
         }
 
         private void cboDiller_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -257,23 +254,35 @@ namespace Ornek_SqLiteWpf
                 if (cboDiller.SelectedItem != null)
                 {
                     KDil selDil = (KDil)cboDiller.SelectedItem;
-
-                    LoadData(selDil.Id);
+                    m_seciliDilId = selDil.Id;
+                    LoadData(m_seciliDilId);
                 }
             }
         }
 
         private void btnKarsilikEkle_Click(object sender, RoutedEventArgs e)
         {
-            Sozcuk ds = (Sozcuk)DataGrid1.SelectedItem;
+            SozcukKarsilik ds = (SozcukKarsilik)DataGrid1.SelectedItem;
 
             if (ds != null)
             {
+                Sozcuk? sozcuk;
+                using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+                {
+                    sozcuk = db.Sozcuk.Where(x => x.Id == ds.SozcukId).First();
+                }
 
-                KarsilikWinEx win = new KarsilikWinEx();
-                win.m_Sozcuk = ds;
-                win.Owner = Application.Current.MainWindow;
-                win.ShowDialog();
+                if (sozcuk != null)
+                {
+                    KarsilikWinEx win = new KarsilikWinEx();
+                    win.m_Sozcuk = sozcuk;
+                    win.m_SeciliDilId = (int)cboDiller.SelectedValue;
+                    win.Owner = Application.Current.MainWindow;
+                    win.ShowDialog();
+                } else
+                {
+                    MessageBox.Show(ds.Sozcuk + " Sozcuk bulunamadi");
+                }
             }
         }
 

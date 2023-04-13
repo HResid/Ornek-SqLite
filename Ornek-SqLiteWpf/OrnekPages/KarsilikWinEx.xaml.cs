@@ -17,6 +17,11 @@ namespace Ornek_SqLiteWpf
 
         public Karsilik m_Karsilik = new Karsilik();
         /// <summary>
+        /// eklenecek 
+        /// </summary>
+        public int m_SeciliDilId { get; set; }
+
+        /// <summary>
         /// varsayilan sozcuk
         /// </summary>
         public Sozcuk m_Sozcuk = new Sozcuk();
@@ -42,7 +47,9 @@ namespace Ornek_SqLiteWpf
             cboDils.SelectedValuePath = "Id";
 
             // varsayilan dil ilki japanca
+            if (m_SeciliDilId != 0) m_Karsilik.DilId = m_SeciliDilId;
             if (m_Karsilik.DilId == 0) m_Karsilik.DilId = 1;
+
             cboDils.SelectedValue = m_Karsilik.DilId;
 
             // sozcuk secili mi?
@@ -65,7 +72,8 @@ namespace Ornek_SqLiteWpf
                 {
                     DataGrid1.DataContext = kars;
 
-                    m_Karsilik = kars.First();
+                    m_Karsilik = kars.Where(x => x.DilId == m_SeciliDilId)
+                        .FirstOrDefault(new Karsilik());
                 }
             }
 
