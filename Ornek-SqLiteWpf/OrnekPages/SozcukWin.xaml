@@ -1,0 +1,46 @@
+<Window x:Class="Ornek_SqLiteWpf.SozcukWin" 
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	Title="Sozcuk" Width="557" Height="406"  ResizeMode="NoResize" 
+        WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="28"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Height" Value="28"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="White">
+        <Label Height="28" Margin="8,32,0,0" Width="120" Content="Id"/>
+        <TextBox Margin="133,32,0,4" Name="txtId" Text="" Width="150"/>
+        <Label Height="28" Margin="8,65,0,0" Width="120" Content="Anlam"/>
+        <TextBox Height="28" Margin="133,65,0,0" Name="txtAnlam" Text="" Width="266" LostFocus="txtAnlam_LostFocus"/>
+        <Label Height="28" Margin="8,98,0,0" Width="120" Content="EsAnlam"/>
+        <TextBox Height="28" Margin="133,98,0,0" Name="txtEsAnlam" Text="" Width="266" />
+        <Label Height="28" Margin="8,131,0,0" Width="120" Content="Aciklama"/>
+        <TextBox Height="28" Margin="133,131,0,0" Name="txtAciklama" Text="" Width="266" />
+        <Label Height="28" Margin="8,164,0,0" Width="120" Content="EkNot"/>
+        <TextBox Height="28" Margin="133,164,0,4" Name="txtEkNot" Text="" Width="150" />
+        <Label Height="28" Margin="8,197,0,0" Width="120" Content="Szid"/>
+        <TextBox Height="28" Margin="133,197,0,4" Name="txtSzid" Text="" Width="150" />
+        <Label Height="28" Margin="8,230,0,0" Width="120" Content="BitOp"/>
+        <TextBox Margin="133,230,0,4" Name="txtBitOp" Text="" Width="150"/>
+        <Label Height="28" Margin="8,263,0,0" Width="120" Content="Kayit"/>
+        <TextBox Height="28" Margin="133,263,0,4" Name="txtKayit" Text="" Width="150" />
+
+
+        <Button Content="Kay_det" Height="36" HorizontalAlignment="Right" Margin="0,0,112,12" Name="btnOK" VerticalAlignment="Bottom" Width="94" Click="btnOK_Click"/>
+        <Button Content="İptal" Height="36" HorizontalAlignment="Right" Margin="0,0,12,12" Name="btnClose" VerticalAlignment="Bottom" Width="94" IsCancel="True" Click="btnClose_Click"/>
+
+    </Grid>
+</Window>

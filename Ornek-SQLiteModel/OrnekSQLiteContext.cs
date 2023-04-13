@@ -79,7 +79,7 @@ namespace Ornek_SQLiteModel
             mbuild.Entity<Sozcuk>().HasData(new Sozcuk
             {
                 Id = 1,
-                Szid = Guid.NewGuid(),
+                Uid = Guid.NewGuid(),
                 Anlam = "Okumak",
                 BitOp = 1,
                 Aciklama = "bir emirle baslayak",

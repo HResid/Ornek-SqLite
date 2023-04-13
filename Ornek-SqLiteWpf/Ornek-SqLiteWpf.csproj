@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<FileVersion>7.23.413.10</FileVersion>
+		<AssemblyVersion>7.0.0.1</AssemblyVersion>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<RootNamespace>Ornek_SqLiteWpf</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CoreRes" Version="7.23.209.1" />
+		<PackageReference Include="xredev.ReCore" Version="7.23.404.1" />
+		<PackageReference Include="xredev.ReDot" Version="7.23.201.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Ornek-SQLiteModel\Ornek-SQLiteModel.csproj" />
+	</ItemGroup>
+
+</Project>

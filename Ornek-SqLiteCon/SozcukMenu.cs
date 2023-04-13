@@ -1,9 +1,4 @@
 ﻿using Ornek_SQLiteModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ornek_SqLiteCon
 {
@@ -23,16 +18,16 @@ namespace Ornek_SqLiteCon
                 Console.Clear();
 
                 Console.WindowWidth = 110;
-                Console.BufferWidth = 120;
-                Console.WriteLine("*-----------------------------------------------------------------------------------------------------------*");
-                Console.WriteLine("*                                                                                                           *");
-                Console.WriteLine("*-----------------------------------------------------------------------------------------------------------*");
-                Console.WriteLine("*      - 0-Çıkış  / e-Eski Menu                                                                             *");
-                Console.WriteLine("* Ekle - 1-Sozcuk / 2-Karsilik                                                                              *");
-                Console.WriteLine("* List - 3-Sozcuk / 4-Karsilik                                                                              *");
-                Console.WriteLine("*                                                                                                           *");
-                Console.WriteLine("*                                                                                                           *");
-                Console.WriteLine("*-----------------------------------------------------------------------------------------------------------*");
+                // Console.BufferWidth = 120;
+                // Console.WriteLine("*-----------------------------------------------------------------------------------------------------------*");
+                // Console.WriteLine("*                                                                                                           *");
+                // Console.WriteLine("*-----------------------------------------------------------------------------------------------------------*");
+                Console.WriteLine("*      - 0-Çıkış  / e-Eski Menu          "); //                                                                  *");
+                Console.WriteLine("* Ekle - 1-Sozcuk / 2-Karsilik           "); //                                                                  *");
+                Console.WriteLine("* List - 3-Sozcuk / 4-Karsilik           "); //                                                                  *");
+                Console.WriteLine("*                                        "); //                                                                  *");
+                Console.WriteLine("*                                        "); //                                                                  *");
+                // Console.WriteLine("*-------------------------------------");----------------------------------------------------------------------*");
 
                 ConsoleKeyInfo ck = Console.ReadKey(true);
                 if (ck.Key == ConsoleKey.Escape || ck.Key == ConsoleKey.D0 || ck.Key == ConsoleKey.NumPad0)
@@ -65,11 +60,11 @@ namespace Ornek_SqLiteCon
             if (sozcukList.Count == 0) Console.WriteLine("hic sozcuk yok");
 
             var topluList = (from soz in sozcukList
-                             join kar in karList on soz.Szid equals kar.Szid
+                             join kar in karList on soz.Uid equals kar.SozcukUid
                              select new
                              {
                                  Id = soz.Id,
-                                 SzId = kar.Szid,
+                                 SzId = kar.SozcukUid,
                                  Sozcuk = soz.Anlam,
                                  Anlam1 = kar.Anlam1
                              }
@@ -138,9 +133,9 @@ namespace Ornek_SqLiteCon
                 goto dilsec;
             }
 
-            krs.Diud = found.Diud;
+            krs.DilUid = found.Diud;
             krs.BitOp = 1;
-            krs.Szid = soz.Szid;
+            krs.SozcukUid = soz.Uid.HasValue ? soz.Uid.Value : Guid.Empty;
 
             Console.Write("Anlam1:");
             krs.Anlam1 = Console.ReadLine();

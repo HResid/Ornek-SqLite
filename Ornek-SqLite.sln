@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33513.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ornek-SqLiteCon", "Ornek-SqLiteCon\Ornek-SqLiteCon.csproj", "{55810B58-877A-42CC-AC37-C82B93988FF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ornek-SqLiteCon", "Ornek-SqLiteCon\Ornek-SqLiteCon.csproj", "{55810B58-877A-42CC-AC37-C82B93988FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ornek-SQLiteModel", "Ornek-SQLiteModel\Ornek-SQLiteModel.csproj", "{9ED39168-B8DD-4FDE-9FF3-6ADAD838C5B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ornek-SQLiteModel", "Ornek-SQLiteModel\Ornek-SQLiteModel.csproj", "{9ED39168-B8DD-4FDE-9FF3-6ADAD838C5B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ornek-SqLiteWpf", "Ornek-SqLiteWpf\Ornek-SqLiteWpf.csproj", "{CA50E66D-BE34-40F2-A704-D5B86C4616A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9ED39168-B8DD-4FDE-9FF3-6ADAD838C5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ED39168-B8DD-4FDE-9FF3-6ADAD838C5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ED39168-B8DD-4FDE-9FF3-6ADAD838C5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA50E66D-BE34-40F2-A704-D5B86C4616A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA50E66D-BE34-40F2-A704-D5B86C4616A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA50E66D-BE34-40F2-A704-D5B86C4616A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA50E66D-BE34-40F2-A704-D5B86C4616A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

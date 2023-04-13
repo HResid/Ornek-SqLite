@@ -20,13 +20,21 @@ namespace Ornek_SQLiteModel
         public int Id { get; set; }
 
         /// <summary>
-        /// Sozcuk Guid
+        /// Sozcuk Guid (Szid)
         /// </summary>
-        public Guid? Szid { get; set; }
+        public Guid SozcukUid { get; set; }
+        /// <summary>
+        ///  sorgularda vs. pratik oluyor.
+        /// </summary>
+        public int SozcukId { get; set; }
         /// <summary>
         /// Dil Guid
         /// </summary>
-        public Guid? Diud { get; set; }
+        public Guid DilUid { get; set; }
+        /// <summary>
+        /// sorgularda vs. pratik oluyor.
+        /// </summary>
+        public int DilId { get; set; }
 
         public string Anlam1 { get; set; }
         public string Anlam2 { get; set; }

@@ -1,0 +1,69 @@
+<Window x:Class="Ornek_SqLiteWpf.KarsilikWinEx" 
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	Title="Karsilik" Width="783" Height="514"  ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="28"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Height" Value="28"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="White">
+        <Label Height="28" Margin="8,32,0,0" Width="120" Content="Id"/>
+        <TextBox Margin="133,32,0,0" Name="txtId" Text="" Width="150" IsEnabled="False" IsTabStop="False"/>
+
+        <Label Height="23" Margin="10,65,0,0" Width="120" Content="Diud"/>
+        <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding}" DataContext="{Binding}" 
+                  x:Name="cboDils" Margin="133,65,0,0" VerticalAlignment="Top" Width="192" SelectionChanged="cboDils_SelectionChanged"/>
+
+        <Label Height="21" Margin="10,93,0,0" Width="120" Content="Szid"/>
+        <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding}" DataContext="{Binding}"
+                  IsEditable="True"
+                  x:Name="cboSozcuks" Margin="133,92,0,0" VerticalAlignment="Top" Width="192"/>
+
+        <Label Height="28" Margin="8,131,0,0" Width="120" Content="Anlam1"/>
+        <TextBox Height="28" Margin="133,131,0,0" Name="txtAnlam1" Text="" Width="194" />
+        <Label Height="28" Margin="8,164,0,0" Width="120" Content="Anlam2"/>
+        <TextBox Height="28" Margin="133,164,0,0" Name="txtAnlam2" Text="" Width="194" />
+        <Label Height="28" Margin="8,197,0,0" Width="120" Content="Anlam3"/>
+        <TextBox Height="28" Margin="133,197,0,0" Name="txtAnlam3" Text="" Width="194" />
+        <Label Height="28" Margin="8,230,0,0" Width="120" Content="OkunusTr"/>
+        <TextBox Height="28" Margin="133,230,0,0" Name="txtOkunusTr" Text="" Width="194" />
+        <Label Height="28" Margin="8,263,0,0" Width="120" Content="OkunusEn"/>
+        <TextBox Height="28" Margin="133,263,0,0" Name="txtOkunusEn" Text="" Width="194" />
+        <Label Height="28" Margin="8,296,0,0" Width="120" Content="Aciklama"/>
+        <TextBox Height="28" Margin="133,296,0,0" Name="txtAciklama" Text="" Width="392" />
+        <Label Height="28" Margin="8,329,0,0" Width="120" Content="OzelKod"/>
+        <TextBox Height="28" Margin="133,329,0,0" Name="txtOzelKod" Text="" Width="150" />
+        <Label Height="28" Margin="8,362,0,0" Width="120" Content="BitOp"/>
+        <TextBox Margin="133,362,0,0" Name="txtBitOp" Text="" Width="150"/>
+
+
+        <Button Content="Kay_det" Height="36" HorizontalAlignment="Right" Margin="0,0,112,12" Name="btnOK" VerticalAlignment="Bottom" Width="94" Click="btnOK_Click"/>
+        <Button Content="İptal" Height="36" HorizontalAlignment="Right" Margin="0,0,12,12" Name="btnClose" VerticalAlignment="Bottom" Width="94" IsCancel="True" Click="btnClose_Click"/>
+
+        <DataGrid x:Name="DataGrid1" Height="223" Margin="0,21,12,0" 
+                  VerticalAlignment="Top" MinRowHeight="30"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True" CanUserDeleteRows="False" CanUserAddRows="False"
+                  ItemsSource="{Binding}" DataContext="{Binding}" HorizontalAlignment="Right" Width="286" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                <DataGridTextColumn Header="Anlam1" Binding="{Binding Path=Anlam1}" Width="150" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                <DataGridTextColumn Header="DilId" Binding="{Binding Path=DilId}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

@@ -19,8 +19,8 @@ namespace Ornek_SQLiteModel
         public string EsAnlam { get; set; }
         public string Aciklama { get; set; }
         public string EkNot { get; set; }
-        
-        public Guid? Szid { get; set; }
+        // Szid idi
+        public Guid? Uid { get; set; }
 
         /// <summary>
         /// null/0, 1-varsayilan gorunur, 

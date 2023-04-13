@@ -78,7 +78,7 @@ namespace Ornek_SqLiteCon
                         if (Console.ReadKey().Key == ConsoleKey.E)
                         {
                             // db.Database.ExecuteSql()
-                            List<Karsilik> karsiliks = db.Karsilik.Where(x => x.Szid == sozcuks[0].Szid).ToList();
+                            List<Karsilik> karsiliks = db.Karsilik.Where(x => x.SozcukUid == sozcuks[0].Uid).ToList();
 
                             db.Karsilik.RemoveRange(karsiliks);
                             db.Sozcuk.RemoveRange(sozcuks);
@@ -169,9 +169,9 @@ namespace Ornek_SqLiteCon
                 goto dilsec;
             }
 
-            krs.Diud = found.Diud;
+            krs.DilUid = found.Diud;
             krs.BitOp = 1;
-            krs.Szid = soz.Szid;
+            krs.SozcukUid = soz.Uid.HasValue ? soz.Uid.Value : Guid.Empty;
 
             Console.Write("Anlam1:");
             krs.Anlam1 = Console.ReadLine();
@@ -225,7 +225,7 @@ namespace Ornek_SqLiteCon
             Sozcuk sz = new Sozcuk();
 
             sz.BitOp = 1;
-            sz.Szid = Guid.NewGuid();
+            sz.Uid = Guid.NewGuid();
             sz.Kayit = DateTime.Now;
             sz.Id = 0;
 
@@ -312,7 +312,7 @@ namespace Ornek_SqLiteCon
 
             using (OrnekSQLiteContext db = new OrnekSQLiteContext())
             {
-                list = db.Karsilik.Where(x => x.BitOp == 1 && x.Szid == sozcuk.Szid).OrderByDescending(o => o.Id).ToList();
+                list = db.Karsilik.Where(x => x.BitOp == 1 && x.SozcukUid == sozcuk.Uid).OrderByDescending(o => o.Id).ToList();
             }
 
             if (list.Count == 0) Console.WriteLine("hic karsilik yok");
