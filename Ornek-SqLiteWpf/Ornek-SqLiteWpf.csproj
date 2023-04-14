@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<FileVersion>7.23.413.15</FileVersion>
-		<AssemblyVersion>7.0.0.1</AssemblyVersion>
+		<FileVersion>7.23.414.1</FileVersion>
+		<AssemblyVersion>7.0.16.1</AssemblyVersion>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<RootNamespace>Ornek_SqLiteWpf</RootNamespace>

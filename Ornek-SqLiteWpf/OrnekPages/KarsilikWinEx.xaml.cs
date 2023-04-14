@@ -32,8 +32,6 @@ namespace Ornek_SqLiteWpf
             InitializeComponent();
         }
 
-
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // dilleri yukle
@@ -55,6 +53,30 @@ namespace Ornek_SqLiteWpf
             // sozcuk secili mi?
             if (m_Sozcuk != null && m_Sozcuk.Id > 0)
             {
+                // sozcuk tekrar alalim
+                try
+                {
+
+                    using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+                    {
+                        int sid = m_Sozcuk.Id;
+                        Sozcuk temp = new Sozcuk();
+                        Sozcuk? found = new Sozcuk();
+                        found = db.Sozcuk.Where(x => x.Id == sid).First();
+                        if (found != null)
+                        {
+                            m_Sozcuk = found;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"sozcuk alinamadi, {m_Sozcuk.Id}");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 cboSozcuks.Text = m_Sozcuk.Anlam;
             }
 

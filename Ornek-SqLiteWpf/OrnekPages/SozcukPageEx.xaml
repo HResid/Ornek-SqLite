@@ -116,6 +116,7 @@ Title="Sozcuk" d:DesignHeight="500" d:DesignWidth="800" Loaded="Page_Loaded">
                 <ContextMenu>
                     <MenuItem Header="Ye_ni" x:Name="ctxNew" Click="btnNew_Click" />
                     <MenuItem Header="_Aç..." x:Name="ctxOpen" Click="btnOpen_Click"/>
+                    <MenuItem Header="_Karşılık Ekle..." x:Name="ctxKarsilikEkle" Click="btnKarsilikEkle_Click" />
                     <Separator />
                     <MenuItem Header="_Sil" x:Name="ctxDelete" Click="ctxDelete_Click"/>
                     <Separator x:Name="ctxSilSep" />

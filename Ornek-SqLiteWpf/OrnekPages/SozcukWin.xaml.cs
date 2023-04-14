@@ -34,6 +34,8 @@ namespace Ornek_SqLiteWpf
             // txtSzid.Text = m_Sozcuk.Szid;
             txtBitOp.Text = m_Sozcuk.BitOp.ToString();
             // txtKayit.Text = m_Sozcuk.Kayit;
+
+            txtAnlam.Focus();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -70,9 +72,9 @@ namespace Ornek_SqLiteWpf
                     // guid kontrol: if (m_Sozcuk.Uid == Guid.Empty)
                     if (m_Sozcuk.Id == 0)
                     {
-                        // m_Sozcuk.Uid = Guid.NewGuid();
+                        m_Sozcuk.Uid = Guid.NewGuid();
                         // m_Sozcuk.Kaydeden = Environment.UserName;
-                        // m_Sozcuk.KayitTarih = DateTime.Now;
+                        m_Sozcuk.Kayit = DateTime.Now;
                         db.Sozcuk.Add(m_Sozcuk);
                     }
                     else

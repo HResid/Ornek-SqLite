@@ -22,7 +22,7 @@ xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 
     <Grid Background="White">
         <Label Height="28" Margin="8,32,0,0" Width="120" Content="Id"/>
-        <TextBox Margin="133,32,0,4" Name="txtId" Text="" Width="150"/>
+        <TextBox Margin="133,32,0,4" Name="txtId" Text="" Width="150" IsEnabled="False"/>
         <Label Height="28" Margin="8,65,0,0" Width="120" Content="Anlam"/>
         <TextBox Height="28" Margin="133,65,0,0" Name="txtAnlam" Text="" Width="266" LostFocus="txtAnlam_LostFocus"/>
         <Label Height="28" Margin="8,98,0,0" Width="120" Content="EsAnlam"/>

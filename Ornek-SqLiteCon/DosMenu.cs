@@ -24,7 +24,7 @@ namespace Ornek_SqLiteCon
                 Console.WriteLine("3-Karsilik son");
                 Console.WriteLine("");
                 Console.WriteLine("4-Sozcuk Ekle    5-Karsilik Ekle");
-                Console.WriteLine("");
+                Console.WriteLine("8-Sozcuk Update ");
                 Console.WriteLine("9-Sozcuk Sil");
                 Console.WriteLine("");
 
@@ -46,6 +46,8 @@ namespace Ornek_SqLiteCon
                 else if (ck.Key == ConsoleKey.D5 || ck.Key == ConsoleKey.NumPad5)
                     KarsilikEkle();
 
+                else if (ck.Key == ConsoleKey.D8 || ck.Key == ConsoleKey.NumPad8)
+                    SozcukUpdate();
                 else if (ck.Key == ConsoleKey.D9 || ck.Key == ConsoleKey.NumPad9)
                     SozcukSil();
 
@@ -271,6 +273,41 @@ namespace Ornek_SqLiteCon
                     Console.WriteLine(ex.Message);
                 }
             }
+            Console.ReadKey();
+        }
+
+        public void SozcukUpdate()
+        {
+            List<Sozcuk> list = new List<Sozcuk>();
+
+            using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+            {
+                list = db.Sozcuk.Where(x => x.Uid == null).ToList();
+                if (list.Count == 0) Console.WriteLine("hic sozcuk yok");
+                foreach (Sozcuk item in list)
+                {
+                    Console.WriteLine("{0} - {1}", item.Id, item.Anlam);
+                }
+
+                Console.Write("null olan Uid'leri yeni guid koyup gunceller" +
+                    "\nGuncellenecek 1-guncelle / 0 cikis:");
+                string sno = Console.ReadLine();
+                if (string.IsNullOrEmpty(sno) == false)
+                {
+                    int sid = Convert.ToInt32(sno);
+                    if (sid > 0)
+                    {
+                        foreach(Sozcuk sz in list)
+                        {
+                            sz.Uid = Guid.NewGuid();
+                        }
+
+                        db.Sozcuk.UpdateRange(list);
+                        db.SaveChanges();
+                    }
+                }
+            }
+
             Console.ReadKey();
         }
 
