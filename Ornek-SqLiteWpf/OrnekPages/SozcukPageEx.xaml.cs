@@ -181,6 +181,11 @@ namespace Ornek_SqLiteWpf
                 e.Handled = true;
                 btnOpen_Click(sender, null);
             }
+            else if (e.Key == System.Windows.Input.Key.F12)
+            {
+                e.Handled = true;
+                btnNew_Click(sender, e);
+            }
             else if (e.Key == System.Windows.Input.Key.Insert)
             {
                 e.Handled = true;
