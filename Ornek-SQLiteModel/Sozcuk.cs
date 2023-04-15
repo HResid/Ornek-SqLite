@@ -29,5 +29,9 @@ namespace Ornek_SQLiteModel
 
         public DateTime Kayit { get; set; } = DateTime.Now;
 
+        public string Seri { get; set; }
+        public int? Sira { get; set; }
+        public string EkNo { get; set; }
+
     }
 }

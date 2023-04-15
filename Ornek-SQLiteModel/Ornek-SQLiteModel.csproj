@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<FileVersion>7.23.0414.1</FileVersion>
-		<AssemblyVersion>7.0.0.2</AssemblyVersion>
+		<FileVersion>7.23.0415.1</FileVersion>
+		<AssemblyVersion>7.0.2.1</AssemblyVersion>
 		<TargetFramework>net7.0</TargetFramework>
 		<RootNamespace>Ornek_SQLiteModel</RootNamespace>
 		<ImplicitUsings>enable</ImplicitUsings>

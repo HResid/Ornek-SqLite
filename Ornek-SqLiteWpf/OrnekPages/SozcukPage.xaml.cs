@@ -29,6 +29,7 @@ namespace Ornek_SqLiteWpf
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadData();
+
         }
 
         private void LoadData()
@@ -37,12 +38,10 @@ namespace Ornek_SqLiteWpf
 
             try
             {
-
                 using (OrnekSQLiteContext db = new OrnekSQLiteContext())
                 {
-                    m_Sozcuk = db.Sozcuk.ToList();
+                    m_Sozcuk = db.Sozcuk.OrderByDescending(o => o.Id).ToList();
                 }
-
             }
             catch (Exception ex)
             {
@@ -51,6 +50,8 @@ namespace Ornek_SqLiteWpf
 
             DataGrid1.ItemsSource = m_Sozcuk;
             sbiRowCount.Content = m_Sozcuk.ToList().Count.ToString() + " row(s)";
+
+            DataGrid1.Focus();
 
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
@@ -70,8 +71,9 @@ namespace Ornek_SqLiteWpf
             if (win.ShowDialog() == true)
             {
                 // update/save on win
-                // db.SaveChanges();
                 LoadData();
+                DataGrid1.SelectedItem = ds;
+                DataGrid1.Focus();
             }
         }
 
@@ -101,10 +103,10 @@ namespace Ornek_SqLiteWpf
             win.m_Sozcuk = new Sozcuk();
             if (win.ShowDialog() == true)
             {
-                // db.Sozcuk.Add(win.m_Sozcuk);
-                // sbiReady.Content = db.SaveChanges().ToString() + " record(s) saved";
-
                 LoadData();
+                // DataGrid1.SelectedItem = win.m_Sozcuk;
+                DataGrid1.Focus();
+
             }
         }
 

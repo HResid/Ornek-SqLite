@@ -100,7 +100,7 @@ Title="Sozcuk" d:DesignHeight="500" d:DesignWidth="800" Loaded="Page_Loaded">
                 <DataGridTextColumn Header="Aciklama" Binding="{Binding Path=Aciklama}" Width="200" ElementStyle="{StaticResource LeftAlignStyleV}"/>
                 <DataGridTextColumn Header="EkNot" Binding="{Binding Path=EkNot}" Width="100" ElementStyle="{StaticResource LeftAlignStyleV}"/>
                 <DataGridTextColumn Header="Uid" Binding="{Binding Path=Uid}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="BitOp" Binding="{Binding Path=BitOp}" Width="150" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                <DataGridTextColumn Header="BitOp" Binding="{Binding Path=BitOp}" Width="40" ElementStyle="{StaticResource LeftAlignStyleV}"/>
                 <DataGridTextColumn Header="Kayit" Binding="{Binding Path=Kayit}" Width="120" ElementStyle="{StaticResource LeftAlignStyleV}"/>
             </DataGrid.Columns>
 
