@@ -4,7 +4,7 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 mc:Ignorable="d"
-Title="Sozcuk" d:DesignHeight="500" d:DesignWidth="800" Loaded="Page_Loaded">
+Title="Sozcuk" d:DesignHeight="300" d:DesignWidth="800" Loaded="Page_Loaded">
 
     <Page.Resources>
         <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
@@ -95,35 +95,48 @@ Title="Sozcuk" d:DesignHeight="500" d:DesignWidth="800" Loaded="Page_Loaded">
         </ToolBar>
 
         <!-- DataGrid -->
-        <DataGrid Grid.Row="2" Name="DataGrid1" CanUserAddRows="False" CanUserDeleteRows="False" 
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="45*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Grid.Column="0" Name="DataGrid1" CanUserAddRows="False" CanUserDeleteRows="False" 
 				CanUserResizeRows="False" SelectionMode="Single" SelectionUnit="FullRow" MinRowHeight="30"
-				SelectedValuePath="Id" 
+				SelectedValuePath="Id" AutoGenerateColumns="False" SelectionChanged="DataGrid1_SelectionChanged"
                 ItemsSource="{Binding}" DataContext="{Binding}" IsReadOnly="True" PreviewKeyDown="DataGrid1_PreviewKeyDown">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="SozcukId" Binding="{Binding Path=SozcukId}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="Anlam" Binding="{Binding Path=Anlam}" Width="200" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="SozcukId" Binding="{Binding Path=SozcukId}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="EsAnlam" Binding="{Binding Path=EsAnlam}" Width="100" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="Aciklama" Binding="{Binding Path=Aciklama}" Width="200" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="EkNot" Binding="{Binding Path=EkNot}" Width="100" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="Uid" Binding="{Binding Path=Uid}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="BitOp" Binding="{Binding Path=BitOp}" Width="150" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-                <DataGridTextColumn Header="Kayit" Binding="{Binding Path=Kayit}" Width="120" ElementStyle="{StaticResource LeftAlignStyleV}"/>
-            </DataGrid.Columns>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Sozcuk" Binding="{Binding Path=Sozcuk}" Width="100" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                    <DataGridTextColumn Header="Anlam1" Binding="{Binding Path=Anlam1}" Width="100" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                    <DataGridTextColumn Header="Anlam2" Binding="{Binding Path=Anlam2}" Width="100" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                    <DataGridTextColumn Header="SozcukId" Binding="{Binding Path=SozcukId}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                    <DataGridTextColumn Header="KarsilikId" Binding="{Binding Path=SozcukId}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                </DataGrid.Columns>
 
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Ye_ni" x:Name="ctxNew" Click="btnNew_Click" />
-                    <MenuItem Header="_Aç..." x:Name="ctxOpen" Click="btnOpen_Click"/>
-                    <MenuItem Header="_Karşılık Ekle..." x:Name="ctxKarsilikEkle" Click="btnKarsilikEkle_Click" />
-                    <Separator />
-                    <MenuItem Header="_Sil" x:Name="ctxDelete" Click="ctxDelete_Click"/>
-                    <Separator x:Name="ctxSilSep" />
-                    <MenuItem Header="_Yenile" x:Name="ctxYenile" />
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Ye_ni" x:Name="ctxNew" Click="btnNew_Click" />
+                        <MenuItem Header="_Aç..." x:Name="ctxOpen" Click="btnOpen_Click"/>
+                        <MenuItem Header="_Karşılık Ekle..." x:Name="ctxKarsilikEkle" Click="btnKarsilikEkle_Click" />
+                        <Separator />
+                        <MenuItem Header="_Sil" x:Name="ctxDelete" Click="ctxDelete_Click"/>
+                        <Separator x:Name="ctxSilSep" />
+                        <MenuItem Header="_Yenile" x:Name="ctxYenile" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+
+            <DataGrid Grid.Column="2" Name="dgKarsiliklar" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" SelectionUnit="FullRow" MinRowHeight="30"
+                      AutoGenerateColumns="False" ItemsSource="{Binding}" DataContext="{Binding}" IsReadOnly="True" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Anlam1" Binding="{Binding Path=Anlam1}" Width="150" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                    <DataGridTextColumn Header="DilId" Binding="{Binding Path=DilId}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="50" ElementStyle="{StaticResource LeftAlignStyleV}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
 
         <!-- StatusBar -->
         <StatusBar Background="#FF8888BE" Foreground="#FFF8F5F5" Grid.Row="3">
@@ -131,7 +144,7 @@ Title="Sozcuk" d:DesignHeight="500" d:DesignWidth="800" Loaded="Page_Loaded">
             <StatusBarItem x:Name="sbiElapsed" Content="0" />
             <StatusBarItem x:Name="sbiRowCount" Content="0" />
             <Separator/>
-            <StatusBarItem x:Name="sbiVer" Content="SozcukPage" />
+            <StatusBarItem x:Name="sbiVer" Content="SozcukPageEx" />
             <StatusBarItem x:Name="sbiWarn" Content="..." Foreground="#FFCEB9B9" />
         </StatusBar>
 

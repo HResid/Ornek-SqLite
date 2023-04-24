@@ -33,7 +33,7 @@ namespace Ornek_SqLiteWpf
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            DataGrid1.Columns.Clear();
+            // DataGrid1.Columns.Clear();
 
             List<KDil> diller = new List<KDil>();
 
@@ -284,12 +284,36 @@ namespace Ornek_SqLiteWpf
                     win.m_SeciliDilId = (int)cboDiller.SelectedValue;
                     win.Owner = Application.Current.MainWindow;
                     win.ShowDialog();
-                } else
+                }
+                else
                 {
                     MessageBox.Show(ds.Sozcuk + " Sozcuk bulunamadi");
                 }
             }
         }
 
+        private void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SozcukKarsilik ds = (SozcukKarsilik)DataGrid1.SelectedItem;
+            if (ds != null)
+            {
+
+                // eger karsilik belirtilmediyse, ara
+                if (ds.SozcukId > 0)
+                {
+                    List<Karsilik> kars = new List<Karsilik>();
+                    using (OrnekSQLiteContext db = new OrnekSQLiteContext())
+                    {
+                        kars = db.Karsilik.Where(x => x.SozcukId == ds.SozcukId).ToList();
+                    }
+
+                    // datagrid'e ekle
+                    if (kars.Count > 0)
+                    {
+                        dgKarsiliklar.DataContext = kars;
+                    }
+                }
+            }
+        }
     }  // End Class
 } // Namespace
